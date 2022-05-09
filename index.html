@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homework7</title>
+    <body>
+        <script>
+            const obj = {
+                x: 5,
+                y: 10
+            }
+
+            function getSum(num) {
+                return this.x + this.y + num
+            }
+
+            function bind(fn, context, ...args) {
+                const uuid = Date.now();
+                context[uuid] = fn;
+                const fnResult = context[uuid](...args);
+                delete context[uuid]
+
+                return () => fnResult;
+            }
+
+            console.log(bind(getSum, obj, 5)());
+            </script>
+    </body>
+</head>
