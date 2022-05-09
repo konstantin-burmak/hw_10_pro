@@ -14,14 +14,12 @@
                 return this.x + this.y + num  + num2
             }
 
-            function bind(fn, context, ...rest) {
-                return function(...args) {
-                    const uuid = Date.now();
-                    context[uuid] = fn;
-                    const fnResult = context[uuid](...rest.concat(args))
-                    delete context[uuid]
+            function bind(fn, context) {
+                const bindArgs = Array.from(arguments).slice(bind.length)
 
-                    return fnResult;
+                return function () {
+                    const args = bindArgs.concat(Array.from(arguments));
+                    return fn.apply(context, args)
                 }
             }
 
