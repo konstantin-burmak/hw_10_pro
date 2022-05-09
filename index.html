@@ -16,7 +16,12 @@
 
             function bind(fn, context, ...rest) {
                 return function(...args) {
-                    return fn.apply(context, rest.concat(args))
+                    const uuid = Date.now();
+                    context[uuid] = fn;
+                    const fnResult = context[uuid](...rest.concat(args))
+                    delete context[uuid]
+
+                    return fnResult;
                 }
             }
 
